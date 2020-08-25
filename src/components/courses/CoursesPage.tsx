@@ -1,6 +1,18 @@
-import React, { ChangeEvent, FormEvent } from "react";
+import React, {  FormEvent } from "react";
+import { connect } from "react-redux";
+import * as courseActions from "../../redux/actions/courseactions";
+import { RootState } from "../../redux/reducers";
 
-class CoursesPage extends React.Component<{}, CoursesPageState> {
+export type CoursesPageState = {
+  course: { title: string };
+};
+
+export type CoursesPageProps = {
+  dispatch: any;
+  courses: courseActions.Course[];
+};
+
+class CoursesPage extends React.Component<CoursesPageProps, CoursesPageState> {
   state = {
     course: {
       title: "",
@@ -14,7 +26,7 @@ class CoursesPage extends React.Component<{}, CoursesPageState> {
 
   handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    alert(this.state.course.title);
+    this.props.dispatch(courseActions.createCourse(this.state.course));
   };
 
   /* By placing the submit handler at the form level and not the button level, ENTER will also submit the form. */
@@ -29,13 +41,16 @@ class CoursesPage extends React.Component<{}, CoursesPageState> {
           value={this.state.course.title}
         />
         <input type="submit" value="Save" />
+        {this.props.courses.map((c) => (
+          <div key={c.title}>{c.title}</div>
+        ))}
       </form>
     );
   }
 }
 
-export type CoursesPageState = {
-  course: { title: string };
-};
+function mapStateToProps(state: RootState) {
+  return { courses: state.courses };
+}
 
-export default CoursesPage;
+export default connect(mapStateToProps)(CoursesPage);
