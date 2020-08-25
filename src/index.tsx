@@ -10,6 +10,7 @@ import configureStore from "./redux/configureStore";
 import { Provider as ReduxProvider } from "react-redux";
 
 const store = configureStore();
+export type AppDispatch = typeof store.dispatch;
 
 ReactDOM.render(
   <React.StrictMode>

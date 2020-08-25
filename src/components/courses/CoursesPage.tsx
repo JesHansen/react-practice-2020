@@ -1,14 +1,15 @@
-import React, {  FormEvent } from "react";
+import React, { FormEvent } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../redux/actions/courseactions";
 import { RootState } from "../../redux/reducers";
+import { AppDispatch } from "../..";
 
 export type CoursesPageState = {
   course: { title: string };
 };
 
 export type CoursesPageProps = {
-  dispatch: any;
+  createCourse: (c: courseActions.Course) => void;
   courses: courseActions.Course[];
 };
 
@@ -26,7 +27,7 @@ class CoursesPage extends React.Component<CoursesPageProps, CoursesPageState> {
 
   handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    this.props.dispatch(courseActions.createCourse(this.state.course));
+    this.props.createCourse(this.state.course);
   };
 
   /* By placing the submit handler at the form level and not the button level, ENTER will also submit the form. */
@@ -53,4 +54,11 @@ function mapStateToProps(state: RootState) {
   return { courses: state.courses };
 }
 
-export default connect(mapStateToProps)(CoursesPage);
+function mapDispatchToProps(dispatch: AppDispatch) {
+  return {
+    createCourse: (c: courseActions.Course) =>
+      dispatch(courseActions.createCourse(c)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
