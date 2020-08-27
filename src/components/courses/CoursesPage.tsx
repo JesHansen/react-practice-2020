@@ -3,14 +3,15 @@ import { connect } from "react-redux";
 import * as courseActions from "../../redux/actions/courseactions";
 import { RootState } from "../../redux/reducers";
 import { AppDispatch } from "../..";
+import { Course } from "../../data/course";
 
 export type CoursesPageState = {
   course: { title: string };
 };
 
 export type CoursesPageProps = {
-  createCourse: (c: courseActions.Course) => void;
-  courses: courseActions.Course[];
+  createCourse: (c: Course) => void;
+  courses: Course[];
 };
 
 class CoursesPage extends React.Component<CoursesPageProps, CoursesPageState> {
@@ -56,7 +57,7 @@ function mapStateToProps(state: RootState) {
 
 function mapDispatchToProps(dispatch: AppDispatch) {
   return {
-    createCourse: (c: courseActions.Course) =>
+    createCourse: (c: Course) =>
       dispatch(courseActions.createCourse(c)),
   };
 }

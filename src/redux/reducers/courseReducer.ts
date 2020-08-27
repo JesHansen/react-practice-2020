@@ -1,8 +1,9 @@
-import { CreateCourseAction, CREATE_COURSE } from "../actions/courseactions";
+import { CreateCourseAction } from "../actions/courseactions";
+import { Actions } from '../actions/BaseAction'
 
 export default function courseReducer(state = [], action: CreateCourseAction) {
   switch (action.type) {
-    case CREATE_COURSE:
+    case Actions.CREATE_COURSE:
       return [...state, { ...action.course }];
     default:
       return state;

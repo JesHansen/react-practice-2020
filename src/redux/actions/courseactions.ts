@@ -1,8 +1,8 @@
-export const CREATE_COURSE = "CREATE_COURSE";
+import { BaseAction, Actions } from "./BaseAction";
+import { Course } from "../../data/course";
 
-export type Course = {title: string};
-export type CreateCourseAction = { type: typeof CREATE_COURSE; course: Course };
+export type CreateCourseAction = BaseAction & { course: Course };
 
 export function createCourse(course: Course): CreateCourseAction {
-  return { type: CREATE_COURSE, course };
+  return { type: Actions.CREATE_COURSE, course };
 }
